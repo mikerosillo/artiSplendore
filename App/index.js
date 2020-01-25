@@ -8,7 +8,7 @@ import {
   StatusBar, 
 } from 'react-native';
 import {Header, LearnMoreLinks, Colors, DebugInstructions, ReloadInstructions } from 'react-native/Libraries/NewAppScreen';
-// import NasaPicOfTheDay from './Components/NasaPictureOfTheDay';
+import NasaPicOfTheDay from './Components/NasaPictureOfTheDay';
 import MuseumEuropeanPaints from './Components/MuseumEuropeanPaints';
 
 class App extends Component {
@@ -21,7 +21,7 @@ class App extends Component {
             // contentInsetAdjustmentBehavior="automatic"
             style={styles.scrollView}>
                 <View style={styles.body}>
-                    {/* <NasaPicOfTheDay /> */}
+                    <NasaPicOfTheDay />
                     <MuseumEuropeanPaints />
                 </View>
             </ScrollView>
