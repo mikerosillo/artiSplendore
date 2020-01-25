@@ -7,22 +7,22 @@ import {
 } from 'react-native';
 
 
-class MuseumEuropeanPaints extends Component {
+class MuseumEuropeanSculptures extends Component {
     constructor(){
         super();
         this.state = {
             paintImageUrl:[],
             title:[],
-            objectId: 436865,
+            objectId: 186124,
             artistDisplayName:[],
             artistBeginDate:[],
             artistEndDate:[],
             creditLine:[],
             artistDisplayBio:[],
         }
-        this.getFirstPaint()
+        this.getSculptures()
     };
-    getFirstPaint(){
+    getSculptures(){
         fetch(`https://collectionapi.metmuseum.org/public/collection/v1/objects/${this.state.objectId}`, {
         method: 'GET',
         headers: {
@@ -32,28 +32,28 @@ class MuseumEuropeanPaints extends Component {
       }).then((response)=>{
           if(response.ok){
               response.json().then((data)=>{
-                //   console.log('from response data', data)
+                  console.log('from response data sculptures', data)
                   this.state.paintImageUrl.push(data.primaryImage)
                   this.state.title.push(data.title)
                   this.state.artistDisplayName.push(data.artistDisplayName)
-                  this.state.artistBeginDate.push(data.artistBeginDate)
-                  this.state.artistEndDate.push(data.artistEndDate)
+                //   this.state.artistBeginDate.push(data.artistBeginDate)
+                //   this.state.artistEndDate.push(data.artistEndDate)
                   this.state.creditLine.push(data.creditLine)
                   this.state.artistDisplayBio.push(data.artistDisplayBio)
                   let nextObjectId = this.state.objectId
-                  if(nextObjectId <= 436870){
+                  if(nextObjectId <= 186127){
                     nextObjectId += 1
                       this.setState({objectId: nextObjectId})
-                      return this.getFirstPaint()
+                      return this.getSculptures()
                     } else {
-                       return false  //stop recursion here
+                       return false
                   }
               })
           } else if(response.status == '404'){
               let nextObjectId = this.state.objectId
               nextObjectId += 1
               this.setState({objectId: nextObjectId})
-              return this.getFirstPaint()
+              return this.getSculptures()
           } else {
               return false
           }
@@ -62,13 +62,13 @@ class MuseumEuropeanPaints extends Component {
       }) 
     };
 
-
+    
     renderImages(){
         let title = this.state.title
         let images =this.state.paintImageUrl
         let artistDisplayName = this.state.artistDisplayName
-        let artistBeginDate = this.state.artistBeginDate
-        let artistEndDate = this.state.artistEndDate
+        // let artistBeginDate = this.state.artistBeginDate
+        // let artistEndDate = this.state.artistEndDate
         let creditLine = this.state.creditLine
         let artistDisplayBio = this.state.artistDisplayBio
         var map = images.map((data, key) => {
@@ -87,7 +87,7 @@ class MuseumEuropeanPaints extends Component {
                         <View style={{flexDirection:'column'}}>
                             <Text style={{marginLeft:10,color:'#000', marginTop:20}}>{creditLine[key]}</Text>
                             <Text style={{marginLeft:10,color:'#000', marginTop:0}}>{artistDisplayBio[key]}</Text>
-                            <Text style={{marginLeft:10,color:'#000', marginTop:0, marginBottom:20}}>{artistDisplayName[key]}{' '}{artistBeginDate[key]}/{artistEndDate[key]}</Text>
+                            <Text style={{marginLeft:10,color:'#000', marginTop:0, marginBottom:20}}>{artistDisplayName[key]}{' '}</Text>
                         </View> 
                     </View> 
                 </>
@@ -128,4 +128,4 @@ const styles = StyleSheet.create({
 })
 
 
-export default MuseumEuropeanPaints
+export default MuseumEuropeanSculptures
