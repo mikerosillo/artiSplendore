@@ -3,10 +3,15 @@ import {
   Image, 
   Text,
   View,
-  StyleSheet
+  StyleSheet,
+  Button,
+  Dimensions
 } from 'react-native';
+import Modal from "react-native-modal";
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 
+const width = Dimensions.get('window').width
 class MuseumEuropeanPaints extends Component {
     constructor(){
         super();
@@ -19,6 +24,9 @@ class MuseumEuropeanPaints extends Component {
             artistEndDate:[],
             creditLine:[],
             artistDisplayBio:[],
+            tapOnce:true,
+            opened:[],
+            isModalVisible: null
         }
         this.getFirstPaint()
     };
@@ -32,7 +40,6 @@ class MuseumEuropeanPaints extends Component {
       }).then((response)=>{
           if(response.ok){
               response.json().then((data)=>{
-                //   console.log('from response data', data)
                   this.state.paintImageUrl.push(data.primaryImage)
                   this.state.title.push(data.title)
                   this.state.artistDisplayName.push(data.artistDisplayName)
@@ -41,7 +48,7 @@ class MuseumEuropeanPaints extends Component {
                   this.state.creditLine.push(data.creditLine)
                   this.state.artistDisplayBio.push(data.artistDisplayBio)
                   let nextObjectId = this.state.objectId
-                  if(nextObjectId <= 436870){
+                  if(nextObjectId <= 436867){
                     nextObjectId += 1
                       this.setState({objectId: nextObjectId})
                       return this.getFirstPaint()
@@ -62,7 +69,27 @@ class MuseumEuropeanPaints extends Component {
       }) 
     };
 
-
+    getStyles(){
+      if(this.state.tapOnce == true){
+        return { flex:1,justifyContent: 'center', alignItems: 'center', backgroundColor:'#000000'}
+      } else {
+        return { flex:1,justifyContent: 'center', alignItems: 'center', backgroundColor:'#000000', height:650 }
+      }
+    };
+    showName(){
+      if(this.state.tapOnce == true){
+        return <Text style={{color:'#FFF', textAlign:'center', backgroundColor:'transparent', marginTop:-30}}>{this.state.title}</Text>
+      } else {
+        return false
+      }
+    };
+    clickHandler(e, key) {
+      this.setState({ activeModal: key })
+    };
+  
+    hideModal() {
+        this.setState({ activeModal: null })
+    };
     renderImages(){
         let title = this.state.title
         let images =this.state.paintImageUrl
@@ -74,23 +101,34 @@ class MuseumEuropeanPaints extends Component {
         var map = images.map((data, key) => {
            if(data !== ''){
             return (
-                <>
-                    <View style={styles.solicitudes}>
-                        <Text style={{color:'#000', marginTop:15, letterSpacing:0.25, fontSize:20, fontWeight:'500', textAlign:'center'}}>{title[key]}</Text>
-                        <View style={{alignItems:'center'}}>
-                            <Image
-                            source={{uri: data}}
-                            resizeMode='contain'
-                            style={{ width: 300, height: 300, marginTop:20}}
-                            />
-                        </View>
-                        <View style={{flexDirection:'column'}}>
-                            <Text style={{marginLeft:10,color:'#000', marginTop:20}}>{creditLine[key]}</Text>
-                            <Text style={{marginLeft:10,color:'#000', marginTop:0}}>{artistDisplayBio[key]}</Text>
-                            <Text style={{marginLeft:10,color:'#000', marginTop:0, marginBottom:20}}>{artistDisplayName[key]}{' '}{artistBeginDate[key]}/{artistEndDate[key]}</Text>
-                        </View> 
-                    </View> 
-                </>
+              <View key={key} style={styles.solicitudes}>
+                <Modal style={{ alignItems:'center', maxWidth:'90%' }}  isVisible={this.state.activeModal === key}>
+                  <View  style={{ alignItems:'center', maxWidth:'90%' }}>
+                  <Image
+                  source={{uri: data}}
+                  style={{width: width,height: 600,}}
+                  resizeMode="cover"
+                  />
+                    <Button  title="Hide modal" onPress={this.hideModal.bind(this)} />
+                  </View>
+                </Modal>
+                <Text style={{color:'#000', marginTop:15, letterSpacing:0.25, fontSize:20, fontWeight:'500', textAlign:'center'}}>{title[key]}</Text>
+                <View >
+                  <TouchableOpacity style={{alignItems:'center'}} onPress={e => this.clickHandler(e, key)} >
+                    <Image
+                    source={{uri: data}}
+                    style={{width: 300,
+                    height: 300, marginTop:20}} 
+                    resizeMode="contain"
+                    />
+                  </TouchableOpacity>
+                </View>
+                <View style={{flexDirection:'column'}}>
+                    <Text style={{marginLeft:10,color:'#000', marginTop:20}}>{creditLine[key]}</Text>
+                    <Text style={{marginLeft:10,color:'#000', marginTop:0}}>{artistDisplayBio[key]}</Text>
+                    <Text style={{marginLeft:10,color:'#000', marginTop:0, marginBottom:20}}>{artistDisplayName[key]}{' '}{artistBeginDate[key]}/{artistEndDate[key]}</Text>
+                </View> 
+              </View>    
             )
             } else {
                 return false
@@ -100,7 +138,7 @@ class MuseumEuropeanPaints extends Component {
     };
     render() {
         return (
-            <View style={{alignItems:'center', marginBottom:40}}>
+            <View style={{flex:1,alignItems:'center', marginBottom:40}}>
                 {this.renderImages()}
             </View>
         );
@@ -108,6 +146,7 @@ class MuseumEuropeanPaints extends Component {
 }
 const styles = StyleSheet.create({
     solicitudes:{
+        flex:1,
         borderTopLeftRadius:4,
         borderTopRightRadius:4,
         borderRadius:4,

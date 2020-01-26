@@ -88,11 +88,11 @@ class App extends Component {
 
 const styles = StyleSheet.create({
 scrollView: {
-    backgroundColor: Colors.lighter,
+    backgroundColor: '#d0bcb5',
   },
   
   body: {
-    backgroundColor: Colors.white,
+    backgroundColor: '#d0bcb5',
   },
 });
 
