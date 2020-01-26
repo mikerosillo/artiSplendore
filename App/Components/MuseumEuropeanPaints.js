@@ -5,10 +5,11 @@ import {
   View,
   StyleSheet,
   Button,
-  Dimensions
+  Dimensions,
+  TouchableOpacity,
+  TouchableWithoutFeedback
 } from 'react-native';
 import Modal from "react-native-modal";
-import { TouchableOpacity } from 'react-native-gesture-handler';
 
 
 const width = Dimensions.get('window').width
@@ -26,10 +27,16 @@ class MuseumEuropeanPaints extends Component {
             artistDisplayBio:[],
             tapOnce:true,
             opened:[],
-            isModalVisible: null
+            isModalVisible: null,
+            refreshing: true,
+            activeModal:null
         }
         this.getFirstPaint()
     };
+    onRefresh() {
+      this.setState({ paintImageUrl: [], title: [], artistDisplayName:[], artistBeginDate:[], artistEndDate:[],creditLine:[],artistDisplayBio:[]})
+      this.getFirstPaint()
+  };
     getFirstPaint(){
         fetch(`https://collectionapi.metmuseum.org/public/collection/v1/objects/${this.state.objectId}`, {
         method: 'GET',
@@ -48,9 +55,9 @@ class MuseumEuropeanPaints extends Component {
                   this.state.creditLine.push(data.creditLine)
                   this.state.artistDisplayBio.push(data.artistDisplayBio)
                   let nextObjectId = this.state.objectId
-                  if(nextObjectId <= 436867){
+                  if(nextObjectId <= 436870){
                     nextObjectId += 1
-                      this.setState({objectId: nextObjectId})
+                      this.setState({objectId: nextObjectId, refreshing:false})
                       return this.getFirstPaint()
                     } else {
                        return false  //stop recursion here
@@ -103,14 +110,18 @@ class MuseumEuropeanPaints extends Component {
             return (
               <View key={key} style={styles.solicitudes}>
                 <Modal style={{ alignItems:'center', maxWidth:'90%' }}  isVisible={this.state.activeModal === key}>
-                  <View  style={{ alignItems:'center', maxWidth:'90%' }}>
-                  <Image
-                  source={{uri: data}}
-                  style={{width: width,height: 600,}}
-                  resizeMode="cover"
-                  />
-                    <Button  title="Hide modal" onPress={this.hideModal.bind(this)} />
-                  </View>
+                  <TouchableWithoutFeedback
+                      onPress={()=>{
+                        this.hideModal();
+                      }}>
+                    <View  style={{ alignItems:'center', maxWidth:'90%' }}>
+                      <Image
+                      source={{uri: data}}
+                      style={{width: width,height: 600,}}
+                      resizeMode="cover"
+                      />
+                    </View>
+                  </TouchableWithoutFeedback>
                 </Modal>
                 <Text style={{color:'#000', marginTop:15, letterSpacing:0.25, fontSize:20, fontWeight:'500', textAlign:'center'}}>{title[key]}</Text>
                 <View >
@@ -138,9 +149,9 @@ class MuseumEuropeanPaints extends Component {
     };
     render() {
         return (
-            <View style={{flex:1,alignItems:'center', marginBottom:40}}>
-                {this.renderImages()}
-            </View>
+          <View style={{flex:1,alignItems:'center', marginBottom:40}}>
+          {this.renderImages()}
+          </View>
         );
     }
 }

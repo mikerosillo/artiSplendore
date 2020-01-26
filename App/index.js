@@ -15,6 +15,7 @@ import MuseumEuropeanPaints from './Components/MuseumEuropeanPaints';
 import MuseumEuropeanSculptures from './Components/MuseumEuropeanSculptures';
 import Drawer from 'react-native-drawer';
 import Icon from 'react-native-vector-icons/dist/Entypo';
+import Loading from 'react-native-whc-loading'
 
 // import MuseumEuropeanSculptures from './Components/MuseumEuropeanSculptures';
 
@@ -75,6 +76,7 @@ class App extends Component {
           contentInsetAdjustmentBehavior="automatic"
           style={styles.scrollView}>
             <View style={styles.body}>
+              <Loading ref="loading"/>
               <NasaPicOfTheDay />
               {this.wichTorender()}
             </View>
