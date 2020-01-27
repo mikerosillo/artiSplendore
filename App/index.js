@@ -7,19 +7,14 @@ import {
   Text,
   StatusBar, 
   TouchableOpacity,
-
 } from 'react-native';
 import NasaPicOfTheDay from './Components/NasaPictureOfTheDay';
 import MuseumEuropeanPaints from './Components/MuseumEuropeanPaints';
 import MuseumEuropeanSculptures from './Components/MuseumEuropeanSculptures';
 import Drawer from 'react-native-drawer';
 import Icon from 'react-native-vector-icons/dist/Entypo';
-import Chat from './Components/Chat';
 import SplashScreen from 'react-native-splash-screen';
 
-// import Loading from 'react-native-whc-loading'
-
-// import MuseumEuropeanSculptures from './Components/MuseumEuropeanSculptures';
 
 class App extends Component {
   constructor(props){
@@ -45,7 +40,6 @@ class App extends Component {
     this.drawer.open()
   };
   wichTorender(){
-    let chat = <Chat />
     let nasa = <NasaPicOfTheDay />
     let paints = <MuseumEuropeanPaints />
     let sculptures = <MuseumEuropeanSculptures />
@@ -53,13 +47,10 @@ class App extends Component {
       return paints
     } else if(this.state.paints == false && this.state.nasa == false && this.state.chat == false && this.state.sculptures == true) {
       return sculptures
-    } else if(this.state.paints == false && this.state.nasa == false && this.state.sculptures == false && this.state.chat == true) {
-      return chat
     } else if(this.state.paints == false  && this.state.sculptures == false && this.state.chat == false && this.state.nasa == true) {
       return nasa
     }
   };
-
   render() {
     var drawer = (
         <View style={{ flex: 1, backgroundColor: '#000000' }}>
@@ -74,13 +65,9 @@ class App extends Component {
             <TouchableOpacity onPress={() => this.setState({sculptures: false, paints: false, openedDrawer: false, chat: false, nasa: true})}>
               <Text style={{ color: '#FFF', marginLeft: 20, marginBottom: 30, fontFamily: 'OpenSans-Bold' }}> Nasa picture of the day  </Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => this.setState({sculptures: false, paints: false, openedDrawer: false, nasa:false, chat: true})}>
-              <Text style={{ color: '#FFF', marginLeft: 20, marginBottom: 30, fontFamily: 'OpenSans-Bold' }}> Chat  </Text>
-            </TouchableOpacity>
           </View>
         </View>
     );
-
     return (
       <Drawer 
       renderNavigationView={() => drawer}
@@ -112,16 +99,8 @@ const styles = StyleSheet.create({
 scrollView: {
     backgroundColor: '#d0bcb5',
   },
-  
   body: {
     backgroundColor: '#d0bcb5',
   },
-  container: {
-    height: 400,
-    flex: 1,
-    backgroundColor: 'red',
-  },
 });
-
-
 export default App

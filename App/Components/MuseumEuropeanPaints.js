@@ -4,7 +4,6 @@ import {
   Text,
   View,
   StyleSheet,
-  Button,
   Dimensions,
   TouchableOpacity,
   TouchableWithoutFeedback
@@ -34,10 +33,6 @@ class MuseumEuropeanPaints extends Component {
         }
         this.getFirstPaint()
     };
-    onRefresh() {
-      this.setState({ paintImageUrl: [], title: [], artistDisplayName:[], artistBeginDate:[], artistEndDate:[],creditLine:[],artistDisplayBio:[]})
-      this.getFirstPaint()
-  };
     getFirstPaint(){
         fetch(`https://collectionapi.metmuseum.org/public/collection/v1/objects/${this.state.objectId}`, {
         method: 'GET',
@@ -158,7 +153,7 @@ class MuseumEuropeanPaints extends Component {
           </>
         );
     }
-}
+};
 const styles = StyleSheet.create({
     solicitudes:{
         flex:1,
@@ -180,6 +175,4 @@ const styles = StyleSheet.create({
         minWidth:'90%'
     },
 })
-
-
 export default MuseumEuropeanPaints

@@ -40,8 +40,6 @@ class MuseumEuropeanSculptures extends Component {
                   this.state.paintImageUrl.push(data.primaryImage)
                   this.state.title.push(data.title)
                   this.state.artistDisplayName.push(data.artistDisplayName)
-                //   this.state.artistBeginDate.push(data.artistBeginDate)
-                //   this.state.artistEndDate.push(data.artistEndDate)
                   this.state.creditLine.push(data.creditLine)
                   this.state.artistDisplayBio.push(data.artistDisplayBio)
                   let nextObjectId = this.state.objectId
@@ -76,45 +74,43 @@ class MuseumEuropeanSculptures extends Component {
         let title = this.state.title
         let images =this.state.paintImageUrl
         let artistDisplayName = this.state.artistDisplayName
-        // let artistBeginDate = this.state.artistBeginDate
-        // let artistEndDate = this.state.artistEndDate
         let creditLine = this.state.creditLine
         let artistDisplayBio = this.state.artistDisplayBio
         var map = images.map((data, key) => {
            if(data !== ''){
             return (
-                    <View key={key} style={styles.solicitudes}>
-                        <Modal style={{ alignItems:'center', maxWidth:'90%' }}  isVisible={this.state.activeModal === key}>
-                            <TouchableWithoutFeedback
-                                onPress={()=>{
-                                    this.hideModal();
-                                }}>
-                                <View  style={{ alignItems:'center', maxWidth:'90%' }}>
-                                <Image
-                                source={{uri: data}}
-                                style={{width: width,height: 600,}}
-                                resizeMode="cover"
-                                />
-                                </View>
-                            </TouchableWithoutFeedback>
-                        </Modal>
-                        <Text style={{color:'#000', marginTop:15, letterSpacing:0.25, fontSize:20, fontWeight:'500', textAlign:'center'}}>{title[key]}</Text>
-                        <View >
-                            <TouchableOpacity style={{alignItems:'center'}} onPress={e => this.clickHandler(e, key)} >
-                                <Image
-                                source={{uri: data}}
-                                style={{width: 300,
-                                height: 300, marginTop:20}} 
-                                resizeMode="contain"
-                                />
-                            </TouchableOpacity>
-                        </View>
-                        <View style={{flexDirection:'column'}}>
-                            <Text style={{marginLeft:10,color:'#000', marginTop:20}}>{creditLine[key]}</Text>
-                            <Text style={{marginLeft:10,color:'#000', marginTop:0}}>{artistDisplayBio[key]}</Text>
-                            <Text style={{marginLeft:10,color:'#000', marginTop:0, marginBottom:20}}>{artistDisplayName[key]}{' '}</Text>
-                        </View> 
+                <View key={key} style={styles.solicitudes}>
+                    <Modal style={{ alignItems:'center', maxWidth:'90%' }}  isVisible={this.state.activeModal === key}>
+                        <TouchableWithoutFeedback
+                            onPress={()=>{
+                                this.hideModal();
+                            }}>
+                            <View  style={{ alignItems:'center', maxWidth:'90%' }}>
+                            <Image
+                            source={{uri: data}}
+                            style={{width: width,height: 600,}}
+                            resizeMode="cover"
+                            />
+                            </View>
+                        </TouchableWithoutFeedback>
+                    </Modal>
+                    <Text style={{color:'#000', marginTop:15, letterSpacing:0.25, fontSize:20, fontWeight:'500', textAlign:'center'}}>{title[key]}</Text>
+                    <View >
+                        <TouchableOpacity style={{alignItems:'center'}} onPress={e => this.clickHandler(e, key)} >
+                            <Image
+                            source={{uri: data}}
+                            style={{width: 300,
+                            height: 300, marginTop:20}} 
+                            resizeMode="contain"
+                            />
+                        </TouchableOpacity>
+                    </View>
+                    <View style={{flexDirection:'column'}}>
+                        <Text style={{marginLeft:10,color:'#000', marginTop:20}}>{creditLine[key]}</Text>
+                        <Text style={{marginLeft:10,color:'#000', marginTop:0}}>{artistDisplayBio[key]}</Text>
+                        <Text style={{marginLeft:10,color:'#000', marginTop:0, marginBottom:20}}>{artistDisplayName[key]}{' '}</Text>
                     </View> 
+                </View> 
                
             )
             } else {

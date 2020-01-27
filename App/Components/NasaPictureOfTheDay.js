@@ -31,28 +31,20 @@ class NasaPicOfTHeDay extends Component {
         {
         useNativeDriver: true
         }
-    )
-
+    );
     onZoomStateChange = event => {
         if (event.nativeEvent.oldState === State.ACTIVE && this.state.tapOnce == true) {
         Animated.spring(this.scale, {
             toValue: 1.7,
             useNativeDriver: true
         }).start()
-        console.log('called')
         this.setState({tapOnce: false})
         } else if (event.nativeEvent.oldState === State.ACTIVE && this.state.tapOnce == false){
             Animated.spring(this.scale, {
                 toValue: 1,
                 useNativeDriver: true
             }).start()
-            console.log('called twice')
             this.setState({tapOnce: true})
-        }
-    }
-    _onSingleTap = event => {
-        if (event.nativeEvent.state === State.ACTIVE) {
-        alert("I'm touched");
         }
     };
     getNasaPicOfTheDay(){
@@ -66,7 +58,7 @@ class NasaPicOfTHeDay extends Component {
           if(response.ok){
               response.json().then((data)=>{
                 console.log(data)
-                  this.setState({nasaPicOfTheDayUrl: data.url, title: data.title, explanation: data.explanation})
+                this.setState({nasaPicOfTheDayUrl: data.url, title: data.title, explanation: data.explanation})
               })
           }
       }).catch((err)=>{
@@ -90,28 +82,25 @@ class NasaPicOfTHeDay extends Component {
     render() {false
         return (
             <View style={this.getStyles()}>
-            <TapGestureHandler
-            onGestureEvent={this.onZoomEvent}
-            onHandlerStateChange={this.onZoomStateChange}>
-              <Animated.Image
-                source={{
-                  uri: `${this.state.nasaPicOfTheDayUrl}`
-                }}
-                style={{
-                  width: width,
-                  height: 300,
-                  transform: [{ scale: this.scale }],
-                  marginTop:-20
-                }}
-                resizeMode="contain"
-              />
-            </TapGestureHandler>
-            {this.showName()}
+              <TapGestureHandler
+              onGestureEvent={this.onZoomEvent}
+              onHandlerStateChange={this.onZoomStateChange}>
+                <Animated.Image
+                  source={{
+                    uri: `${this.state.nasaPicOfTheDayUrl}`
+                  }}
+                  style={{
+                    width: width,
+                    height: 300,
+                    transform: [{ scale: this.scale }],
+                    marginTop:-20
+                  }}
+                  resizeMode="contain"
+                />
+              </TapGestureHandler>
+              {this.showName()}
           </View>   
         );
     }
 }
-
-
-
 export default NasaPicOfTHeDay
