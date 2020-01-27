@@ -55,7 +55,7 @@ class MuseumEuropeanPaints extends Component {
                   this.state.creditLine.push(data.creditLine)
                   this.state.artistDisplayBio.push(data.artistDisplayBio)
                   let nextObjectId = this.state.objectId
-                  if(nextObjectId <= 436870){
+                  if(nextObjectId <= 436869){
                     nextObjectId += 1
                       this.setState({objectId: nextObjectId, refreshing:false})
                       return this.getFirstPaint()

@@ -14,7 +14,8 @@ class NasaPicOfTHeDay extends Component {
         this.state = {
             nasaPicOfTheDayUrl:'',
             title:'',
-            tapOnce:true
+            tapOnce:true,
+            explnation:'',
         }
         this.getNasaPicOfTheDay()
     };
@@ -64,7 +65,8 @@ class NasaPicOfTHeDay extends Component {
       }).then((response)=>{
           if(response.ok){
               response.json().then((data)=>{
-                  this.setState({nasaPicOfTheDayUrl: data.url, title: data.title})
+                console.log(data)
+                  this.setState({nasaPicOfTheDayUrl: data.url, title: data.title, explanation: data.explanation})
               })
           }
       }).catch((err)=>{
@@ -73,14 +75,14 @@ class NasaPicOfTHeDay extends Component {
     };
     getStyles(){
       if(this.state.tapOnce == true){
-        return { flex:1,justifyContent: 'center', alignItems: 'center', backgroundColor:'#000000'}
+        return { flex:1,justifyContent: 'center', alignItems: 'center', backgroundColor:'#000000', height:760}
       } else {
-        return { flex:1,justifyContent: 'center', alignItems: 'center', backgroundColor:'#000000', height:650 }
+        return { flex:1,justifyContent: 'center', alignItems: 'center', backgroundColor:'#000000', height:760 }
       }
     };
     showName(){
       if(this.state.tapOnce == true){
-        return <Text style={{color:'#FFF', textAlign:'center', backgroundColor:'transparent', marginTop:-30}}>{this.state.title}</Text>
+        return <Text style={{color:'#FFF', textAlign:'center', backgroundColor:'transparent', marginTop:0}}>{this.state.title}{"\n"}{this.state.explanation}</Text>
       } else {
         return false
       }

@@ -7,25 +7,30 @@ import {
   Text,
   StatusBar, 
   TouchableOpacity,
-  Image
+
 } from 'react-native';
-import {Header, LearnMoreLinks, Colors, DebugInstructions, ReloadInstructions } from 'react-native/Libraries/NewAppScreen';
 import NasaPicOfTheDay from './Components/NasaPictureOfTheDay';
 import MuseumEuropeanPaints from './Components/MuseumEuropeanPaints';
 import MuseumEuropeanSculptures from './Components/MuseumEuropeanSculptures';
 import Drawer from 'react-native-drawer';
 import Icon from 'react-native-vector-icons/dist/Entypo';
-import Loading from 'react-native-whc-loading'
+import Chat from './Components/Chat';
+// import SocketIOClient from 'socket.io-client';
+// import Loading from 'react-native-whc-loading'
 
 // import MuseumEuropeanSculptures from './Components/MuseumEuropeanSculptures';
 
 class App extends Component {
-  constructor(){
-    super();
+  constructor(props){
+    super(props);
     this.state = {
       sculptures: false,
       paints: true,
+      nasa: false,
       openedDrawer: false,
+      chat: false,
+      chatMessage: "",
+      chatMessages: []
     }
   };
 
@@ -36,28 +41,42 @@ class App extends Component {
     this.drawer.open()
   };
   wichTorender(){
-    var paints = <MuseumEuropeanPaints />
-    var sculptures = <MuseumEuropeanSculptures />
-    if(this.state.sculptures == false){
+    let chat = <Chat />
+    let nasa = <NasaPicOfTheDay />
+    let paints = <MuseumEuropeanPaints />
+    let sculptures = <MuseumEuropeanSculptures />
+    if(this.state.sculptures == false && this.state.nasa == false && this.state.chat == false && this.state.paints == true){
       return paints
-    } else {
+    } else if(this.state.paints == false && this.state.nasa == false && this.state.chat == false && this.state.sculptures == true) {
       return sculptures
+    } else if(this.state.paints == false && this.state.nasa == false && this.state.sculptures == false && this.state.chat == true) {
+      return chat
+    } else if(this.state.paints == false  && this.state.sculptures == false && this.state.chat == false && this.state.nasa == true) {
+      return nasa
     }
-  }
+  };
+
   render() {
     var drawer = (
         <View style={{ flex: 1, backgroundColor: '#000000' }}>
           <Text style={{ marginLeft:0, color: '#FFF', marginTop: 30, fontSize: 25, }}>ArtiSplendore</Text>
           <View style={{ flex: 1, justifyContent: 'center', marginBottom: 0 }}>
-            <TouchableOpacity onPress={() => this.setState({sculptures: true, paints: false, openedDrawer: false})}>
-              <Text style={{ color: '#FFF', marginLeft: 20, marginBottom: 30, fontFamily: 'OpenSans-Bold' }}> Sculptures  </Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => this.setState({sculptures: false, paints: true, openedDrawer: false})}>
+            <TouchableOpacity onPress={() => this.setState({sculptures: false, paints: true,chat: false,nasa: false, openedDrawer: false})}>
               <Text style={{ color: '#FFF', marginLeft: 20, marginBottom: 30, fontFamily: 'OpenSans-Bold' }}> Paints  </Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => this.setState({sculptures: true, paints: false,nasa:false, chat:false, openedDrawer: false})}>
+              <Text style={{ color: '#FFF', marginLeft: 20, marginBottom: 30, fontFamily: 'OpenSans-Bold' }}> sculpture  </Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => this.setState({sculptures: false, paints: false, openedDrawer: false, chat: false, nasa: true})}>
+              <Text style={{ color: '#FFF', marginLeft: 20, marginBottom: 30, fontFamily: 'OpenSans-Bold' }}> Nasa picture of the day  </Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => this.setState({sculptures: false, paints: false, openedDrawer: false, nasa:false, chat: true})}>
+              <Text style={{ color: '#FFF', marginLeft: 20, marginBottom: 30, fontFamily: 'OpenSans-Bold' }}> Chat  </Text>
             </TouchableOpacity>
           </View>
         </View>
     );
+
     return (
       <Drawer 
       renderNavigationView={() => drawer}
@@ -75,14 +94,11 @@ class App extends Component {
           <ScrollView
           contentInsetAdjustmentBehavior="automatic"
           style={styles.scrollView}>
-            <View style={styles.body}>
-              <Loading ref="loading"/>
-              <NasaPicOfTheDay />
+            <View style={styles.body}> 
               {this.wichTorender()}
             </View>
           </ScrollView>
         </SafeAreaView>
-        {/* <Routes /> */}
       </Drawer>
     );
   }
@@ -95,6 +111,11 @@ scrollView: {
   
   body: {
     backgroundColor: '#d0bcb5',
+  },
+  container: {
+    height: 400,
+    flex: 1,
+    backgroundColor: 'red',
   },
 });
 
