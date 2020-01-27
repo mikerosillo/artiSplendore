@@ -12,7 +12,11 @@
   "dependencies": {
     "react": "16.9.0",
     "react-native": "0.61.5",
-    "react-native-router-flux": "^4.2.0"
+    "react-native-drawer": "^2.5.1",
+    "react-native-gesture-handler": "^1.5.3",
+    "react-native-modal": "^11.5.3",
+    "react-native-vector-icons": "^6.6.0",
+    "socket.io-client": "^2.3.0"
   },
   "devDependencies": {
     "@babel/core": "^7.6.2",
