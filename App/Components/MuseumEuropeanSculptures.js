@@ -83,7 +83,6 @@ class MuseumEuropeanSculptures extends Component {
         var map = images.map((data, key) => {
            if(data !== ''){
             return (
-               
                     <View key={key} style={styles.solicitudes}>
                         <Modal style={{ alignItems:'center', maxWidth:'90%' }}  isVisible={this.state.activeModal === key}>
                             <TouchableWithoutFeedback
@@ -126,9 +125,12 @@ class MuseumEuropeanSculptures extends Component {
     };
     render() {
         return (
-            <View style={{alignItems:'center', marginBottom:40}}>
+            <>
+                <View style={{flex:1,alignItems:'center', marginBottom:60, marginTop:30}}>
                 {this.renderImages()}
-            </View>
+                </View>
+                <View style={{flex:1,alignItems:'center', marginBottom:60}}></View>
+            </>
         );
     }
 }

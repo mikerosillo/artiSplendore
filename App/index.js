@@ -15,7 +15,8 @@ import MuseumEuropeanSculptures from './Components/MuseumEuropeanSculptures';
 import Drawer from 'react-native-drawer';
 import Icon from 'react-native-vector-icons/dist/Entypo';
 import Chat from './Components/Chat';
-// import SocketIOClient from 'socket.io-client';
+import SplashScreen from 'react-native-splash-screen';
+
 // import Loading from 'react-native-whc-loading'
 
 // import MuseumEuropeanSculptures from './Components/MuseumEuropeanSculptures';
@@ -32,6 +33,9 @@ class App extends Component {
       chatMessage: "",
       chatMessages: []
     }
+  };
+  componentDidMount() {
+    SplashScreen.hide()
   };
 
   closeDrawer = () => {
@@ -59,7 +63,7 @@ class App extends Component {
   render() {
     var drawer = (
         <View style={{ flex: 1, backgroundColor: '#000000' }}>
-          <Text style={{ marginLeft:0, color: '#FFF', marginTop: 30, fontSize: 25, }}>ArtiSplendore</Text>
+          <Text style={{ marginLeft:0, color: '#FFF',marginLeft: 20, marginTop: 30, fontSize: 25, }}>ArtiSplendore</Text>
           <View style={{ flex: 1, justifyContent: 'center', marginBottom: 0 }}>
             <TouchableOpacity onPress={() => this.setState({sculptures: false, paints: true,chat: false,nasa: false, openedDrawer: false})}>
               <Text style={{ color: '#FFF', marginLeft: 20, marginBottom: 30, fontFamily: 'OpenSans-Bold' }}> Paints  </Text>
@@ -89,7 +93,7 @@ class App extends Component {
         <StatusBar barStyle="dark-content" />
         <SafeAreaView>
           <TouchableOpacity style={{backgroundColor:'#000000'}} onPress={this.openDrawer.bind(this)} >
-            <Icon name="menu" style={{marginLeft:10}} size={30} color="#ffffff" />
+            <Icon name="menu" style={{padding:20}} size={30} color="#ffffff" />
           </TouchableOpacity>
           <ScrollView
           contentInsetAdjustmentBehavior="automatic"

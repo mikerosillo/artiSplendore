@@ -12,6 +12,7 @@ import {
 import Modal from "react-native-modal";
 
 
+
 const width = Dimensions.get('window').width
 class MuseumEuropeanPaints extends Component {
     constructor(){
@@ -149,9 +150,12 @@ class MuseumEuropeanPaints extends Component {
     };
     render() {
         return (
-          <View style={{flex:1,alignItems:'center', marginBottom:40}}>
-          {this.renderImages()}
-          </View>
+          <>
+            <View style={{flex:1,alignItems:'center', marginBottom:60, marginTop:30}}>
+            {this.renderImages()}
+            </View>
+            <View style={{flex:1,alignItems:'center', marginBottom:60}}></View>
+          </>
         );
     }
 }
