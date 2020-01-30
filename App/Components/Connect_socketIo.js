@@ -8,9 +8,10 @@ export default function Connect_socketIo() {
     io("http://192.168.0.3:3001")
   },[])
   return (
-    <View style={styles.container}>
-      <Text>Hello react native!</Text>
-    </View>
+    null
+    // <View style={styles.container}>
+    //   <Text>Hello react native!</Text>
+    // </View>
   );
 }
 

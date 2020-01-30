@@ -14,7 +14,8 @@ import MuseumEuropeanSculptures from './Components/MuseumEuropeanSculptures';
 import Drawer from 'react-native-drawer';
 import Icon from 'react-native-vector-icons/dist/Entypo';
 import SplashScreen from 'react-native-splash-screen';
-import Connect_socketIo from './Components/Connect_socketIo';
+// import Connect_socketIo from './Components/Connect_socketIo';
+import Chat from './Components/Chat';
 
 
 class App extends Component {
@@ -44,12 +45,15 @@ class App extends Component {
     let nasa = <NasaPicOfTheDay />
     let paints = <MuseumEuropeanPaints />
     let sculptures = <MuseumEuropeanSculptures />
+    let chat = <Chat />
     if(this.state.sculptures == false && this.state.nasa == false && this.state.chat == false && this.state.paints == true){
       return paints
     } else if(this.state.paints == false && this.state.nasa == false && this.state.chat == false && this.state.sculptures == true) {
       return sculptures
     } else if(this.state.paints == false  && this.state.sculptures == false && this.state.chat == false && this.state.nasa == true) {
       return nasa
+    } else if(this.state.paints == false  && this.state.sculptures == false && this.state.chat == true && this.state.nasa == false) {
+      return chat
     }
   };
   render() {
@@ -65,6 +69,9 @@ class App extends Component {
             </TouchableOpacity>
             <TouchableOpacity onPress={() => this.setState({sculptures: false, paints: false, openedDrawer: false, chat: false, nasa: true})}>
               <Text style={{ color: '#FFF', marginLeft: 20, marginBottom: 30, fontFamily: 'OpenSans-Bold' }}> Nasa picture of the day  </Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => this.setState({sculptures: false, paints: false, openedDrawer: false, chat: true, nasa: false})}>
+              <Text style={{ color: '#FFF', marginLeft: 20, marginBottom: 30, fontFamily: 'OpenSans-Bold' }}> Chat  </Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -87,7 +94,7 @@ class App extends Component {
           contentInsetAdjustmentBehavior="automatic"
           style={styles.scrollView}>
             <View style={styles.body}> 
-              <Connect_socketIo />
+              {/* <Connect_socketIo /> */}
               {this.wichTorender()}
             </View>
           </ScrollView>
