@@ -14,6 +14,7 @@ import MuseumEuropeanSculptures from './Components/MuseumEuropeanSculptures';
 import Drawer from 'react-native-drawer';
 import Icon from 'react-native-vector-icons/dist/Entypo';
 import SplashScreen from 'react-native-splash-screen';
+import Connect_socketIo from './Components/Connect_socketIo';
 
 
 class App extends Component {
@@ -86,6 +87,7 @@ class App extends Component {
           contentInsetAdjustmentBehavior="automatic"
           style={styles.scrollView}>
             <View style={styles.body}> 
+              <Connect_socketIo />
               {this.wichTorender()}
             </View>
           </ScrollView>
