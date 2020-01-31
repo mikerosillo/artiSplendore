@@ -1,10 +1,5 @@
-console.ignoredYellowBox = ['Remote debugger'];
-import { YellowBox } from 'react-native';
-YellowBox.ignoreWarnings([
-    'Unrecognized WebSocket connection option(s) `agent`, `perMessageDeflate`, `pfx`, `key`, `passphrase`, `cert`, `ca`, `ciphers`, `rejectUnauthorized`. Did you mean to put these under `headers`?'
-]);
 import React, { useEffect, useState, useRef } from 'react'; // learning and practicing hooks
-import { StyleSheet, Text, View, TextInput } from 'react-native';
+import { StyleSheet, Text, View, TextInput, ScrollView } from 'react-native';
 import io from "socket.io-client";
 
 
@@ -28,14 +23,18 @@ export default function Chat() {
   return (
     <View style={styles.container}>
       <Text style={{fontSize:20, fontWeight:'500'}}>Share your ideas!</Text>
-      {displayReceivedMessages}
-      <TextInput 
-        style={{borderWidth:1, borderColor:'blue', width:'90%', borderRadius:4, marginTop:20, textAlign:'center'}}
-        value={messageToSend}
-        onChangeText={text => setMessageToSend(text)}
-        placeholder='Enter message'
-        onSubmitEditing={sendMessage}
-      />
+      <ScrollView style={{width:'90%'}}>
+        <View style={{alignItems: 'center',justifyContent: 'center',}}>
+        {displayReceivedMessages}
+        <TextInput 
+          style={{borderWidth:1, borderColor:'#FFF', width:'90%', borderRadius:4, marginTop:20, textAlign:'center'}}
+          value={messageToSend}
+          onChangeText={text => setMessageToSend(text)}
+          placeholder='Enter message'
+          onSubmitEditing={sendMessage}
+        />
+        </View>
+      </ScrollView>
     </View>
   );
 }
@@ -43,8 +42,9 @@ export default function Chat() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    minHeight:'100%',
-    backgroundColor: '#fff',
+    backgroundColor:'#d0bcb5',
+    minHeight:760,
+    height:'100%',
     alignItems: 'center',
     justifyContent: 'center',
   },
